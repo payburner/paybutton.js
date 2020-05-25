@@ -1,7 +1,7 @@
 {
-  "name": "stencil-starter-project-name",
-  "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "name": "@payburner/paybutton.js",
+  "version": "0.0.5",
+  "description": "Payburner Button",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",
@@ -9,7 +9,7 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/stencil-starter-project-name/stencil-starter-project-name.js",
+  "unpkg": "dist/payburner/paybutton.js",
   "files": [
     "dist/",
     "loader/"
@@ -22,7 +22,17 @@
     "generate": "stencil generate"
   },
   "devDependencies": {
-    "@stencil/core": "^1.12.2"
+    "@stencil/core": "^1.12.2",
+    "@types/jest": "24.9.1",
+    "@types/puppeteer": "2.0.1",
+    "jest": "24.9.0",
+    "jest-cli": "^24.9.0",
+    "puppeteer": "2.1.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "copy-text-to-clipboard": "^2.2.0",
+    "purecss": "^2.0.3"
+  }
 }
