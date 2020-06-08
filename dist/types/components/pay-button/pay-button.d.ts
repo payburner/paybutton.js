@@ -15,7 +15,12 @@ export declare class PayButton {
      */
     buttonid: string;
     price: number;
+    reference: string;
+    fiatprice: number;
+    fiatcurrency: string;
+    allowresetanytime: boolean;
     calcedPrice: number;
+    fiatrate: number;
     purchase: Purchase;
     payburnerStatus: string;
     payburnerLoggedIn: boolean;
@@ -33,7 +38,7 @@ export declare class PayButton {
     extractError(error: any): any;
     makePayment(): void;
     isPayburnerConnected(): any;
-    isPayburnerLoggedIn(): boolean;
+    isPayburnerLoggedIn(): any;
     awaitPayment(): void;
     openModal(): void;
     closeModal(): void;

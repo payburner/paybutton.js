@@ -7,10 +7,14 @@
 
 ## Properties
 
-| Property   | Attribute  | Description    | Type     | Default     |
-| ---------- | ---------- | -------------- | -------- | ----------- |
-| `buttonid` | `buttonid` | The first name | `string` | `undefined` |
-| `price`    | `price`    |                | `number` | `undefined` |
+| Property            | Attribute           | Description    | Type      | Default     |
+| ------------------- | ------------------- | -------------- | --------- | ----------- |
+| `allowresetanytime` | `allowresetanytime` |                | `boolean` | `undefined` |
+| `buttonid`          | `buttonid`          | The first name | `string`  | `undefined` |
+| `fiatcurrency`      | `fiatcurrency`      |                | `string`  | `undefined` |
+| `fiatprice`         | `fiatprice`         |                | `number`  | `undefined` |
+| `price`             | `price`             |                | `number`  | `undefined` |
+| `reference`         | `reference`         |                | `string`  | `undefined` |
 
 
 ## Events

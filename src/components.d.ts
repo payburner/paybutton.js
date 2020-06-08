@@ -7,11 +7,15 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface PayButton {
+        "allowresetanytime": boolean;
         /**
           * The first name
          */
         "buttonid": string;
+        "fiatcurrency": string;
+        "fiatprice": number;
         "price": number;
+        "reference": string;
     }
 }
 declare global {
@@ -27,12 +31,16 @@ declare global {
 }
 declare namespace LocalJSX {
     interface PayButton {
+        "allowresetanytime"?: boolean;
         /**
           * The first name
          */
         "buttonid"?: string;
+        "fiatcurrency"?: string;
+        "fiatprice"?: number;
         "onSettled"?: (event: CustomEvent<any>) => void;
         "price"?: number;
+        "reference"?: string;
     }
     interface IntrinsicElements {
         "pay-button": PayButton;

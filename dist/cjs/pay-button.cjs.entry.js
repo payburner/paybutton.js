@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-4d88944c.js');
+const index = require('./index-4cc0cfa6.js');
 
 var bind = function bind(fn, thisArg) {
   return function wrap() {
@@ -1498,10 +1498,20 @@ const PayButton = class {
         this.settled = index.createEvent(this, "settled", 7);
     }
     handleClick() {
-        axios$1.post('https://gateway.payburner.com/v1/gateway/paybuttons/' +
-            this.buttonid + '/purchase', {
+        const d = {
             price: this.calcedPrice
-        })
+        };
+        if (typeof this.reference !== 'undefined') {
+            d['reference'] = this.reference;
+        }
+        if (typeof this.fiatcurrency !== 'undefined' && this.fiatcurrency !== null &&
+            typeof this.fiatprice !== 'undefined' && this.fiatprice !== null) {
+            d['fiatcurrency'] = this.fiatcurrency;
+            d['fiatprice'] = this.fiatprice;
+            d['fiatrate'] = this.fiatrate;
+        }
+        axios$1.post('https://gateway.payburner.com/v1/gateway/paybuttons/' +
+            this.buttonid + '/purchase', d)
             .then(response => response.data.data)
             .then((data) => {
             console.log('##########' + JSON.stringify(data, null, 2));
@@ -1510,9 +1520,15 @@ const PayButton = class {
         });
     }
     handleReset() {
-        this.modalStatus = 'hide';
-        this.buttonStatus = 'LOADED';
-        this.purchase = new Purchase('', '', '', '', 0, '');
+        if (!this.allowresetanytime && (this.buttonStatus !== 'ERROR' && this.buttonStatus !== 'TIMEOUT')) {
+            console.log('Not allowing reset on settled.');
+            return;
+        }
+        else {
+            this.modalStatus = 'hide';
+            this.buttonStatus = 'LOADED';
+            this.purchase = new Purchase('', '', '', '', 0, '');
+        }
     }
     handlePayburnerStatus(payburnerStatus) {
         if (typeof this.payburnerStatus === 'undefined') {
@@ -1535,25 +1551,48 @@ const PayButton = class {
     }
     handleStatusEvent(event) {
         const detail = event.detail;
+        console.log('PayButton received payburner status event:' + JSON.stringify(detail));
         this.handlePayburnerStatus(detail.extensionStatus);
         this.handlePayburnerLoggedIn(detail.loggedIn);
     }
     componentWillLoad() {
+        if (typeof this.allowresetanytime === 'undefined' || this.allowresetanytime === null) {
+            this.allowresetanytime = true;
+        }
         this.modalStatus = 'hide';
         this.buttonStatus = 'LOADING';
         this.purchase = new Purchase('', '', '', '', 0, '');
-        //document.addEventListener('PayburnerStatus', (e) => this.handleStatusEvent(e) );
         const comp = this;
         return axios$1.get('https://gateway.payburner.com/v1/gateway/paybuttons/' +
             this.buttonid, {})
             .then(response => response.data.data)
             .then(data => {
-            console.log(JSON.stringify(data));
-            console.log('Hi there!' + data.buttonType + ' ' + comp.price);
             const price = parseFloat(data.price);
-            comp.calcedPrice = (data.buttonType === 'FIXED_PRICE' ? price : (typeof comp.price !== 'undefined' && comp.price !== null ? comp.price : price));
-            console.log('Calced price:' + comp.calcedPrice);
-            this.buttonStatus = 'LOADED';
+            if (data.buttonType === 'FIXED_PRICE') {
+                comp.calcedPrice = price;
+                comp.buttonStatus = 'LOADED';
+            }
+            else {
+                if (typeof comp.fiatcurrency !== 'undefined' && comp.fiatcurrency !== null &&
+                    typeof comp.fiatprice !== 'undefined' && comp.fiatprice !== null) {
+                    axios$1.get('https://gateway.payburner.com/v1/gateway/rate/' +
+                        comp.fiatcurrency, {})
+                        .then(fxResponse => fxResponse.data.data)
+                        .then(fxData => {
+                        comp.fiatrate = fxData.rate;
+                        comp.calcedPrice = parseFloat((comp.fiatprice / fxData.rate).toFixed(6));
+                        comp.buttonStatus = 'LOADED';
+                    });
+                }
+                else if (typeof comp.price !== 'undefined' && comp.price !== null) {
+                    comp.calcedPrice = comp.price;
+                    comp.buttonStatus = 'LOADED';
+                }
+                else {
+                    comp.calcedPrice = price;
+                    comp.buttonStatus = 'LOADED';
+                }
+            }
         });
     }
     extractError(error) {
@@ -1617,24 +1656,14 @@ const PayButton = class {
         if (typeof PAYBURNER === 'undefined') {
             return false;
         }
-        else if (typeof this.payburnerStatus === 'undefined') {
-            return PAYBURNER.isPayburnerConnected();
-        }
-        else {
-            return this.payburnerStatus === 'CONNECTED';
-        }
+        return PAYBURNER.isPayburnerConnected();
     }
     isPayburnerLoggedIn() {
         const PAYBURNER = window.PAYBURNER;
         if (typeof PAYBURNER === 'undefined') {
             return false;
         }
-        else if (typeof this.payburnerLoggedIn === 'undefined') {
-            return false;
-        }
-        else {
-            return this.payburnerLoggedIn;
-        }
+        return PAYBURNER.isPayburnerLoggedIn();
     }
     awaitPayment() {
         const comp = this;
@@ -1655,10 +1684,20 @@ const PayButton = class {
         }, 5000);
     }
     openModal() {
-        axios$1.post('https://gateway.payburner.com/v1/gateway/paybuttons/' +
-            this.buttonid + '/purchase', {
+        const d = {
             price: this.calcedPrice
-        })
+        };
+        if (typeof this.reference !== 'undefined') {
+            d['reference'] = this.reference;
+        }
+        if (typeof this.fiatcurrency !== 'undefined' && this.fiatcurrency !== null &&
+            typeof this.fiatprice !== 'undefined' && this.fiatprice !== null) {
+            d['fiatcurrency'] = this.fiatcurrency;
+            d['fiatprice'] = this.fiatprice;
+            d['fiatrate'] = this.fiatrate;
+        }
+        axios$1.post('https://gateway.payburner.com/v1/gateway/paybuttons/' +
+            this.buttonid + '/purchase', d)
             .then(response => response.data.data)
             .then((data) => {
             this.purchase = new Purchase(data.purchaseId, data.status, data.expectedDestinationXrpAddress, data.expectedDestinationXrpAddressTag, data.expectedAmount, data.statusUrl);
@@ -1685,37 +1724,37 @@ const PayButton = class {
     render() {
         const PAYBURNER = window.PAYBURNER;
         if (typeof PAYBURNER === 'undefined') {
-            return index.h("div", null, index.h("button", { onClick: () => this.openModal(), class: "pure-material-button-contained" }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(false, false));
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("div", null, index.h("button", { onClick: () => this.openModal(), class: "pure-material-button-contained" }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(false, false)));
         }
         else if (!this.isPayburnerConnected()) {
-            return index.h("div", null, index.h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(true, false));
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("div", null, index.h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(true, false)));
         }
         else if (!this.isPayburnerLoggedIn()) {
-            return index.h("div", null, index.h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(false, true));
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("div", null, index.h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(false, true)));
         }
         else if (this.buttonStatus === 'PENDING') {
-            return index.h(index.Host, null, index.h("button", { class: "pure-material-button-contained" }, this.buttonStatus));
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { class: "pure-material-button-contained" }, this.buttonStatus));
         }
         else if (this.buttonStatus === 'ERROR') {
-            return index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "ERROR");
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "ERROR"));
         }
         else if (this.buttonStatus === 'WAITING') {
-            return index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "WAITING");
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "WAITING"));
         }
         else if (this.buttonStatus === 'TIMEOUT') {
-            return index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "TIMEOUT");
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "TIMEOUT"));
         }
         else if (this.buttonStatus === 'SETTLING') {
-            return index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus);
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus));
         }
         else if (this.buttonStatus === 'SETTLED') {
-            return index.h(index.Host, { status: this.buttonStatus }, index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus));
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus));
         }
         else if (this.buttonStatus === 'LOADED') {
-            return index.h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" }, this.calcedPrice, " XRP");
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" }, this.calcedPrice, " XRP"));
         }
         else {
-            return index.h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" }, "UNKNOWN: ", this.buttonStatus);
+            return index.h(index.Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, index.h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" }, "UNKNOWN: ", this.buttonStatus));
         }
     }
     get el() { return index.getElement(this); }
