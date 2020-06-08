@@ -38,18 +38,33 @@ class CustomEvent {
 })
 export class PayButton {
     /**
-     * The first name
+     * The unique identifier of the pay button
      */
     @Prop() buttonid: string;
 
+    /**
+     * Override an optional priced pay button with a price in XRP
+     */
     @Prop() price: number;
 
+    /**
+     * This allows you to specify an external reference with the payment.  Useful for correlating payments with orders.
+     */
     @Prop() reference: string;
 
+    /**
+     * Override an optionally priced paybutton with a fiat price.
+     */
     @Prop() fiatprice: number;
 
+    /**
+     * The fiat currency of the fiat price.
+     */
     @Prop() fiatcurrency: string;
 
+    /**
+     * By default true.  Set to false to limit the resets.
+     */
     @Prop() allowresetanytime: boolean;
 
     @State() calcedPrice: number;
