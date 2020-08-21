@@ -2,7 +2,6 @@ import {Component, h, Element, Event, EventEmitter, Listen, Prop, State, Host} f
 import axios from 'axios';
 import copy from 'copy-text-to-clipboard';
 
-
 class Purchase {
     constructor(purchaseId: string, status: string, expectedDestinationXrpAddress: string,
                 expectedDestinationXrpAddressTag: string, expectedAmount: number, statusUrl: string) {
@@ -90,6 +89,8 @@ export class PayButton {
         bubbles: true,
     }) settled: EventEmitter;
 
+    PAYBURNER = (window as any).PAYBURNER;
+
     handleClick() {
 
         const d = {
@@ -111,7 +112,6 @@ export class PayButton {
             this.buttonid + '/purchase', d)
         .then(response => response.data.data)
         .then((data) => {
-            console.log('##########' + JSON.stringify(data, null, 2));
             this.purchase = new Purchase(data.purchaseId, data.status,
                 data.expectedDestinationXrpAddress, data.expectedDestinationXrpAddressTag, data.expectedAmount, data.statusUrl);
             this.makePayment();
@@ -217,10 +217,10 @@ export class PayButton {
     }
 
     makePayment() {
-        const PAYBURNER = (window as any).PAYBURNER;
+
         const comp = this;
         this.buttonStatus = 'WAITING';
-        PAYBURNER.makePaymentWithTag(this.purchase.expectedDestinationXrpAddress,
+        this.PAYBURNER.makePaymentWithTag(this.purchase.expectedDestinationXrpAddress,
             parseInt(this.purchase.expectedDestinationXrpAddressTag), this.purchase.expectedAmount)
         .then(
             function (response) {
@@ -246,6 +246,7 @@ export class PayButton {
                                 if (purchaseStatus.data.data.status === 'SETTLED') {
                                     count.status = 'SETTLED';
                                     clearInterval(interval);
+                                    comp.modalStatus = 'hide';
                                     console.log( 'SETTLED',
                                         response.finalized.hash,
                                         response.finalized.engine_result  );
@@ -270,25 +271,25 @@ export class PayButton {
             })
         .catch(function (error) {
 
-                PAYBURNER.log("<- error: " + comp.extractError(error));
+                this.PAYBURNER.log("<- error: " + comp.extractError(error));
 
         });
     }
 
     isPayburnerConnected() {
-        const PAYBURNER = (window as any).PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
+
+        if (typeof this.PAYBURNER === 'undefined') {
             return false;
         }
-        return PAYBURNER.isPayburnerConnected();
+        return this.PAYBURNER.isPayburnerConnected();
     }
 
     isPayburnerLoggedIn() {
-        const PAYBURNER = (window as any).PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
+
+        if (typeof this.PAYBURNER === 'undefined') {
             return false;
         }
-        return PAYBURNER.isPayburnerLoggedIn();
+        return this.PAYBURNER.isPayburnerLoggedIn();
     }
 
     awaitPayment() {
@@ -337,7 +338,13 @@ export class PayButton {
                 data.expectedDestinationXrpAddress, data.expectedDestinationXrpAddressTag, data.expectedAmount, data.statusUrl);
             this.buttonStatus = data.status;
             this.modalStatus = 'show';
-            this.awaitPayment();
+            if (this.isPayburnerLoggedIn()) {
+                this.makePayment();
+            }
+            else {
+                this.awaitPayment();
+            }
+
         });
     }
 
@@ -354,7 +361,10 @@ export class PayButton {
         </svg>;
     }
 
-    renderModal( showGetPayburner: boolean, showNotLoggedIn: boolean ) {
+    renderModal( showGetPayburner: boolean) {
+
+        const isConnected = this.isPayburnerConnected();
+        const isLoggedIn = this.isPayburnerLoggedIn();
 
         if (this.purchase.status === 'SETTLED') {
             return <div id="myModal" class={this.modalStatus === 'hide' ? 'modal hidden' : 'modal shown'}>
@@ -369,6 +379,7 @@ export class PayButton {
                     <p class="label">
                         XRP Address
                     </p>
+
                     <p class="xrp-address" onClick={() => copy(this.purchase.expectedDestinationXrpAddress)}>
                         {this.purchase.expectedDestinationXrpAddress} {this.renderCopyIcon()}
                     </p>
@@ -392,7 +403,7 @@ export class PayButton {
                         Wallet</a>.
                     </p>) : null}
 
-                    {showNotLoggedIn ? (<p class="payburner-blurb">
+                    {isConnected && !isLoggedIn ? (<p class="payburner-blurb">
                         Your Paybuner Wallet is not logged in.
                     </p>) : null}
 
@@ -429,6 +440,8 @@ export class PayButton {
 
                     <p class="waiting">Waiting for you to send XRP to the address and tag.</p>
 
+
+
                     <div class="lds-ellipsis">
                         <div></div>
                         <div></div>
@@ -438,16 +451,35 @@ export class PayButton {
 
 
                     <hr/>
-                    {showGetPayburner ? (<p class="payburner-blurb">
-                        If you don't have an XRP wallet or want a great payment experience, click here to install
-                        the <a
-                        href="https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en">Payburner
-                        Wallet</a>.
-                    </p>) : null}
 
-                    {showNotLoggedIn ? (<p class="payburner-blurb">
-                        Your Paybuner Wallet is not logged in.
-                    </p>) : null}
+                    {isConnected && isLoggedIn ? (<div><div style={{float: 'left', marginRight: '12px', marginBottom: '12px'}}><img height="50" width="50" src="https://payburner.com/images/favicon.png"/></div><div style={{marginLeft: '8px'}} class="payburner-blurb">
+                        Please open your Payburner Wallet to approve if you do not have 1-click enabled.
+                    </div></div>) : null}
+
+                    {!isConnected ? (<div>
+                        <div style={{float: 'left', marginRight: '12px', marginBottom: '12px'}}><img height="50"
+                                                                                                     width="50"
+                                                                                                     src="https://payburner.com/images/favicon.png"/>
+                        </div>
+                        <div style={{marginLeft: '8px'}} class="payburner-blurb">
+                            If you don't have an XRP wallet or want a great payment experience, click here to install
+                            the <a
+                            href="https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en">Payburner
+                            Wallet</a>.
+                        </div>
+                    </div> ) : null}
+
+                    {isConnected && !isLoggedIn ? (<div>
+                        <div style={{float: 'left', marginRight: '12px', marginBottom: '12px'}}><img height="50"
+                                                                                                     width="50"
+                                                                                                     src="https://payburner.com/images/favicon.png"/>
+                        </div>
+                        <div style={{marginLeft: '8px'}} class="payburner-blurb">
+                            You have Payburner, but you are not logged.  Please do so to approve the payment.
+                        </div>
+                    </div>) : null}
+
+
 
                 </div>
 
@@ -457,55 +489,10 @@ export class PayButton {
 
 
     render() {
-
-        const PAYBURNER = (window as any).PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
-
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><div>
+        return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><div>
                 <button onClick={() => this.openModal()} class="pure-material-button-contained">{this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)}</button>
-                {this.renderModal(false, false)}
+                {this.renderModal(false)}
             </div></Host>;
-        }
-        else if (!this.isPayburnerConnected()) {
-
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><div>
-                <button class="pure-material-button-contained" onClick={() => this.openModal()} >{this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)}</button>
-                {this.renderModal(true, false)}
-            </div></Host>;
-        }
-        else if (!this.isPayburnerLoggedIn()) {
-
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}>
-                <div>
-                <button class="pure-material-button-contained" onClick={() => this.openModal()} >{this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)}</button>
-                {this.renderModal(false, true)}
-                </div>
-            </Host>;
-        }
-        else if (this.buttonStatus === 'PENDING') {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button class="pure-material-button-contained">{this.buttonStatus}</button></Host>;
-        }
-        else if (this.buttonStatus === 'ERROR'  ) {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button onClick={() => this.handleReset()} class="pure-material-button-contained">ERROR</button></Host>;
-        }
-        else if (this.buttonStatus === 'WAITING'  ) {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button onClick={() => this.handleReset()} class="pure-material-button-contained">WAITING</button></Host>;
-        }
-        else if (this.buttonStatus === 'TIMEOUT'  ) {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button onClick={() => this.handleReset()} class="pure-material-button-contained">TIMEOUT</button></Host>;
-        }
-        else if ( this.buttonStatus === 'SETTLING') {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button onClick={() => this.handleReset()} class="pure-material-button-contained">{this.buttonStatus}</button></Host>;
-        }
-        else if ( this.buttonStatus === 'SETTLED') {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button onClick={() => this.handleReset()} class="pure-material-button-contained">{ this.buttonStatus}</button></Host>;
-        }
-        else if ( this.buttonStatus === 'LOADED') {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button onClick={() => this.handleClick()} class="pure-material-button-contained">{this.calcedPrice} XRP</button></Host>;
-        }
-        else {
-            return <Host purchaseId={this.purchase.purchaseId} status={this.buttonStatus}><button onClick={() => this.handleClick()} class="pure-material-button-contained">UNKNOWN: { this.buttonStatus}</button></Host>;
-        }
 
     }
 }

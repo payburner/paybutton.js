@@ -11,13 +11,28 @@ declare class Purchase {
 }
 export declare class PayButton {
     /**
-     * The first name
+     * The unique identifier of the pay button
      */
     buttonid: string;
+    /**
+     * Override an optional priced pay button with a price in XRP
+     */
     price: number;
+    /**
+     * This allows you to specify an external reference with the payment.  Useful for correlating payments with orders.
+     */
     reference: string;
+    /**
+     * Override an optionally priced paybutton with a fiat price.
+     */
     fiatprice: number;
+    /**
+     * The fiat currency of the fiat price.
+     */
     fiatcurrency: string;
+    /**
+     * By default true.  Set to false to limit the resets.
+     */
     allowresetanytime: boolean;
     calcedPrice: number;
     fiatrate: number;
@@ -28,6 +43,7 @@ export declare class PayButton {
     buttonStatus: string;
     el: HTMLElement;
     settled: EventEmitter;
+    PAYBURNER: any;
     handleClick(): void;
     handleReset(): void;
     handlePayburnerStatus(payburnerStatus: string): void;
@@ -43,7 +59,7 @@ export declare class PayButton {
     openModal(): void;
     closeModal(): void;
     renderCopyIcon(): any;
-    renderModal(showGetPayburner: boolean, showNotLoggedIn: boolean): any;
+    renderModal(showGetPayburner: boolean): any;
     render(): any;
 }
 export {};

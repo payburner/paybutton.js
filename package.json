@@ -1,6 +1,6 @@
 {
   "name": "@payburner/paybutton.js",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "Payburner Button",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

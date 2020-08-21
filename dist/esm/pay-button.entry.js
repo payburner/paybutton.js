@@ -1476,7 +1476,7 @@ var copyTextToClipboard_1 = copyTextToClipboard;
 var default_1$1 = copyTextToClipboard;
 copyTextToClipboard_1.default = default_1$1;
 
-const payButtonCss = ":host{display:block}.pure-material-button-contained{position:relative;display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;border:none;border-radius:4px;padding:0 16px;min-width:64px;height:36px;vertical-align:middle;text-align:center;text-overflow:ellipsis;text-transform:uppercase;color:rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));background-color:rgb(var(--pure-material-primary-rgb, 33, 150, 243));-webkit-box-shadow:0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);box-shadow:0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);font-family:var(--pure-material-font, \"Roboto\", \"Segoe UI\", BlinkMacSystemFont, system-ui, -apple-system);font-size:14px;font-weight:500;line-height:36px;overflow:hidden;outline:none;cursor:pointer;-webkit-transition:-webkit-box-shadow 0.2s;transition:-webkit-box-shadow 0.2s;transition:box-shadow 0.2s;transition:box-shadow 0.2s, -webkit-box-shadow 0.2s}.pure-material-button-contained::-moz-focus-inner{border:none}.pure-material-button-contained::before{content:\"\";position:absolute;top:0;bottom:0;left:0;right:0;background-color:rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));opacity:0;-webkit-transition:opacity 0.2s;transition:opacity 0.2s}.pure-material-button-contained::after{content:\"\";position:absolute;left:50%;top:50%;border-radius:50%;padding:50%;width:32px;height:32px;background-color:rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));opacity:0;-webkit-transform:translate(-50%, -50%) scale(1);transform:translate(-50%, -50%) scale(1);-webkit-transition:opacity 1s, -webkit-transform 0.5s;transition:opacity 1s, -webkit-transform 0.5s;transition:opacity 1s, transform 0.5s;transition:opacity 1s, transform 0.5s, -webkit-transform 0.5s}.pure-material-button-contained:hover,.pure-material-button-contained:focus{-webkit-box-shadow:0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);box-shadow:0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)}.pure-material-button-contained:hover::before{opacity:0.08}.pure-material-button-contained:focus::before{opacity:0.24}.pure-material-button-contained:hover:focus::before{opacity:0.3}.pure-material-button-contained:active{-webkit-box-shadow:0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);box-shadow:0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)}.pure-material-button-contained:active::after{opacity:0.32;-webkit-transform:translate(-50%, -50%) scale(0);transform:translate(-50%, -50%) scale(0);-webkit-transition:-webkit-transform 0s;transition:-webkit-transform 0s;transition:transform 0s;transition:transform 0s, -webkit-transform 0s}.pure-material-button-contained:disabled{color:rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);background-color:rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.12);-webkit-box-shadow:none;box-shadow:none;cursor:initial}.pure-material-button-contained:disabled::before{opacity:0}.pure-material-button-contained:disabled::after{opacity:0}.modal{display:none;position:fixed;z-index:1;padding-top:100px;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,0.8);}.modal-content{max-width:300px;background-color:#fefefe;margin:auto;padding:20px;border:1px solid #888;width:300px;color:black;word-wrap:break-word;overflow-wrap:break-word;font-size:12px;font-family:var(--pure-material-font, \"Roboto\", \"Segoe UI\", BlinkMacSystemFont, system-ui, -apple-system)}.modal-content p{margin-top:20px;width:100%;margin-bottom:0px}.modal-content .xrp-price{color:rgb(149, 144, 148);margin-bottom:8px;font-size:28px;width:100%;text-align:center}.modal-content .waiting{color:rgb(149, 144, 148);margin-bottom:8px;font-size:20px;width:100%;text-align:center}.modal-content .payburner-blurb{font-size:12px;width:100%;text-align:left}.modal-content .label{font-size:20px}.modal-content hr{color:rgb(149, 144, 148);width:100%;margin-top:20px;margin-bottom:20px}.modal-content .xrp-address{color:rgb(149, 144, 148);font-size:16px;margin-top:6px;width:100%;word-break:break-word}.modal-content .xrp-address-tag{color:rgb(149, 144, 148);font-size:16px;margin-top:8px;width:100%;word-break:break-word}.close{color:#aaaaaa;float:right;font-size:28px;font-weight:bold}.close:hover,.close:focus{color:#000;text-decoration:none;cursor:pointer}.hidden{display:none}.shown{display:block}.lds-ellipsis{display:inline-block;position:relative;width:80px;height:20px;margin-left:100px;margin-right:100px}.lds-ellipsis div{position:absolute;top:15px;width:13px;height:13px;border-radius:50%;background:rgb(149, 144, 148);-webkit-animation-timing-function:cubic-bezier(0, 1, 1, 0);animation-timing-function:cubic-bezier(0, 1, 1, 0)}.lds-ellipsis div:nth-child(1){left:8px;-webkit-animation:lds-ellipsis1 0.6s infinite;animation:lds-ellipsis1 0.6s infinite}.lds-ellipsis div:nth-child(2){left:8px;-webkit-animation:lds-ellipsis2 0.6s infinite;animation:lds-ellipsis2 0.6s infinite}.lds-ellipsis div:nth-child(3){left:32px;-webkit-animation:lds-ellipsis2 0.6s infinite;animation:lds-ellipsis2 0.6s infinite}.lds-ellipsis div:nth-child(4){left:56px;-webkit-animation:lds-ellipsis3 0.6s infinite;animation:lds-ellipsis3 0.6s infinite}@-webkit-keyframes lds-ellipsis1{0%{-webkit-transform:scale(0);transform:scale(0)}100%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes lds-ellipsis1{0%{-webkit-transform:scale(0);transform:scale(0)}100%{-webkit-transform:scale(1);transform:scale(1)}}@-webkit-keyframes lds-ellipsis3{0%{-webkit-transform:scale(1);transform:scale(1)}100%{-webkit-transform:scale(0);transform:scale(0)}}@keyframes lds-ellipsis3{0%{-webkit-transform:scale(1);transform:scale(1)}100%{-webkit-transform:scale(0);transform:scale(0)}}@-webkit-keyframes lds-ellipsis2{0%{-webkit-transform:translate(0, 0);transform:translate(0, 0)}100%{-webkit-transform:translate(24px, 0);transform:translate(24px, 0)}}@keyframes lds-ellipsis2{0%{-webkit-transform:translate(0, 0);transform:translate(0, 0)}100%{-webkit-transform:translate(24px, 0);transform:translate(24px, 0)}}";
+const payButtonCss = ":host{display:block}.pure-material-button-contained{position:relative;display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;border:none;border-radius:4px;padding:0 16px;min-width:64px;height:36px;vertical-align:middle;text-align:center;text-overflow:ellipsis;text-transform:uppercase;color:rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));background-color:rgb(var(--pure-material-primary-rgb, 33, 150, 243));-webkit-box-shadow:0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);box-shadow:0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);font-family:var(--pure-material-font, \"Roboto\", \"Segoe UI\", BlinkMacSystemFont, system-ui, -apple-system);font-size:14px;font-weight:500;line-height:36px;overflow:hidden;outline:none;cursor:pointer;-webkit-transition:-webkit-box-shadow 0.2s;transition:-webkit-box-shadow 0.2s;transition:box-shadow 0.2s;transition:box-shadow 0.2s, -webkit-box-shadow 0.2s}.pure-material-button-contained::-moz-focus-inner{border:none}.pure-material-button-contained::before{content:\"\";position:absolute;top:0;bottom:0;left:0;right:0;background-color:rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));opacity:0;-webkit-transition:opacity 0.2s;transition:opacity 0.2s}.pure-material-button-contained::after{content:\"\";position:absolute;left:50%;top:50%;border-radius:50%;padding:50%;width:32px;height:32px;background-color:rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));opacity:0;-webkit-transform:translate(-50%, -50%) scale(1);transform:translate(-50%, -50%) scale(1);-webkit-transition:opacity 1s, -webkit-transform 0.5s;transition:opacity 1s, -webkit-transform 0.5s;transition:opacity 1s, transform 0.5s;transition:opacity 1s, transform 0.5s, -webkit-transform 0.5s}.pure-material-button-contained:hover,.pure-material-button-contained:focus{-webkit-box-shadow:0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);box-shadow:0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)}.pure-material-button-contained:hover::before{opacity:0.08}.pure-material-button-contained:focus::before{opacity:0.24}.pure-material-button-contained:hover:focus::before{opacity:0.3}.pure-material-button-contained:active{-webkit-box-shadow:0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);box-shadow:0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)}.pure-material-button-contained:active::after{opacity:0.32;-webkit-transform:translate(-50%, -50%) scale(0);transform:translate(-50%, -50%) scale(0);-webkit-transition:-webkit-transform 0s;transition:-webkit-transform 0s;transition:transform 0s;transition:transform 0s, -webkit-transform 0s}.pure-material-button-contained:disabled{color:rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);background-color:rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.12);-webkit-box-shadow:none;box-shadow:none;cursor:initial}.pure-material-button-contained:disabled::before{opacity:0}.pure-material-button-contained:disabled::after{opacity:0}.modal{display:none;position:fixed;z-index:1;padding-top:100px;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,0.8);}.modal-content{max-width:300px;background-color:#fefefe;margin:auto;padding:20px;border:1px solid #888;width:300px;color:black;word-wrap:break-word;overflow-wrap:break-word;font-size:12px;font-family:var(--pure-material-font, \"Roboto\", \"Segoe UI\", BlinkMacSystemFont, system-ui, -apple-system)}.modal-content p{margin-top:20px;width:100%;margin-bottom:0px}.modal-content .xrp-price{color:rgb(149, 144, 148);margin-bottom:8px;font-size:28px;width:100%;text-align:center}.modal-content .waiting{color:rgb(149, 144, 148);margin-bottom:8px;font-size:20px;width:100%;text-align:center}.modal-content .payburner-blurb{font-size:16px;color:rgb(149, 144, 148);width:100%;text-align:left}.modal-content .label{font-size:20px}.modal-content hr{color:rgb(149, 144, 148);width:100%;margin-top:20px;margin-bottom:20px}.modal-content .xrp-address{color:rgb(149, 144, 148);font-size:16px;margin-top:6px;width:100%;word-break:break-word}.modal-content .xrp-address-tag{color:rgb(149, 144, 148);font-size:16px;margin-top:8px;width:100%;word-break:break-word}.close{color:#aaaaaa;float:right;font-size:28px;font-weight:bold}.close:hover,.close:focus{color:#000;text-decoration:none;cursor:pointer}.hidden{display:none}.shown{display:block}.lds-ellipsis{display:inline-block;position:relative;width:80px;height:20px;margin-left:100px;margin-right:100px}.lds-ellipsis div{position:absolute;top:15px;width:13px;height:13px;border-radius:50%;background:rgb(149, 144, 148);-webkit-animation-timing-function:cubic-bezier(0, 1, 1, 0);animation-timing-function:cubic-bezier(0, 1, 1, 0)}.lds-ellipsis div:nth-child(1){left:8px;-webkit-animation:lds-ellipsis1 0.6s infinite;animation:lds-ellipsis1 0.6s infinite}.lds-ellipsis div:nth-child(2){left:8px;-webkit-animation:lds-ellipsis2 0.6s infinite;animation:lds-ellipsis2 0.6s infinite}.lds-ellipsis div:nth-child(3){left:32px;-webkit-animation:lds-ellipsis2 0.6s infinite;animation:lds-ellipsis2 0.6s infinite}.lds-ellipsis div:nth-child(4){left:56px;-webkit-animation:lds-ellipsis3 0.6s infinite;animation:lds-ellipsis3 0.6s infinite}@-webkit-keyframes lds-ellipsis1{0%{-webkit-transform:scale(0);transform:scale(0)}100%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes lds-ellipsis1{0%{-webkit-transform:scale(0);transform:scale(0)}100%{-webkit-transform:scale(1);transform:scale(1)}}@-webkit-keyframes lds-ellipsis3{0%{-webkit-transform:scale(1);transform:scale(1)}100%{-webkit-transform:scale(0);transform:scale(0)}}@keyframes lds-ellipsis3{0%{-webkit-transform:scale(1);transform:scale(1)}100%{-webkit-transform:scale(0);transform:scale(0)}}@-webkit-keyframes lds-ellipsis2{0%{-webkit-transform:translate(0, 0);transform:translate(0, 0)}100%{-webkit-transform:translate(24px, 0);transform:translate(24px, 0)}}@keyframes lds-ellipsis2{0%{-webkit-transform:translate(0, 0);transform:translate(0, 0)}100%{-webkit-transform:translate(24px, 0);transform:translate(24px, 0)}}";
 
 class Purchase {
     constructor(purchaseId, status, expectedDestinationXrpAddress, expectedDestinationXrpAddressTag, expectedAmount, statusUrl) {
@@ -1491,6 +1491,7 @@ class Purchase {
 const PayButton = class {
     constructor(hostRef) {
         registerInstance(this, hostRef);
+        this.PAYBURNER = window.PAYBURNER;
         this.settled = createEvent(this, "settled", 7);
     }
     handleClick() {
@@ -1510,7 +1511,6 @@ const PayButton = class {
             this.buttonid + '/purchase', d)
             .then(response => response.data.data)
             .then((data) => {
-            console.log('##########' + JSON.stringify(data, null, 2));
             this.purchase = new Purchase(data.purchaseId, data.status, data.expectedDestinationXrpAddress, data.expectedDestinationXrpAddressTag, data.expectedAmount, data.statusUrl);
             this.makePayment();
         });
@@ -1601,10 +1601,9 @@ const PayButton = class {
         return JSON.stringify(error);
     }
     makePayment() {
-        const PAYBURNER = window.PAYBURNER;
         const comp = this;
         this.buttonStatus = 'WAITING';
-        PAYBURNER.makePaymentWithTag(this.purchase.expectedDestinationXrpAddress, parseInt(this.purchase.expectedDestinationXrpAddressTag), this.purchase.expectedAmount)
+        this.PAYBURNER.makePaymentWithTag(this.purchase.expectedDestinationXrpAddress, parseInt(this.purchase.expectedDestinationXrpAddressTag), this.purchase.expectedAmount)
             .then(function (response) {
             if (typeof response.error !== 'undefined') {
                 //alert(JSON.stringify(response, null, 2));
@@ -1624,6 +1623,7 @@ const PayButton = class {
                         if (purchaseStatus.data.data.status === 'SETTLED') {
                             count.status = 'SETTLED';
                             clearInterval(interval);
+                            comp.modalStatus = 'hide';
                             console.log('SETTLED', response.finalized.hash, response.finalized.engine_result);
                             comp.buttonStatus = 'SETTLED';
                             comp.settled.emit(comp.purchase);
@@ -1644,22 +1644,20 @@ const PayButton = class {
             }
         })
             .catch(function (error) {
-            PAYBURNER.log("<- error: " + comp.extractError(error));
+            this.PAYBURNER.log("<- error: " + comp.extractError(error));
         });
     }
     isPayburnerConnected() {
-        const PAYBURNER = window.PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
+        if (typeof this.PAYBURNER === 'undefined') {
             return false;
         }
-        return PAYBURNER.isPayburnerConnected();
+        return this.PAYBURNER.isPayburnerConnected();
     }
     isPayburnerLoggedIn() {
-        const PAYBURNER = window.PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
+        if (typeof this.PAYBURNER === 'undefined') {
             return false;
         }
-        return PAYBURNER.isPayburnerLoggedIn();
+        return this.PAYBURNER.isPayburnerLoggedIn();
     }
     awaitPayment() {
         const comp = this;
@@ -1699,7 +1697,12 @@ const PayButton = class {
             this.purchase = new Purchase(data.purchaseId, data.status, data.expectedDestinationXrpAddress, data.expectedDestinationXrpAddressTag, data.expectedAmount, data.statusUrl);
             this.buttonStatus = data.status;
             this.modalStatus = 'show';
-            this.awaitPayment();
+            if (this.isPayburnerLoggedIn()) {
+                this.makePayment();
+            }
+            else {
+                this.awaitPayment();
+            }
         });
     }
     closeModal() {
@@ -1709,49 +1712,18 @@ const PayButton = class {
     renderCopyIcon() {
         return h("svg", { fill: "currentColor", style: { 'display': 'inline-block', 'vertical-align': 'middle' }, height: "12", width: "12", viewBox: "0 0 1792 1792" }, h("path", { d: "M768 1664h896v-640h-416q-40 0-68-28t-28-68v-416h-384v1152zM1024 224v-64q0-13-9.5-22.5t-22.5-9.5h-704q-13 0-22.5 9.5t-9.5 22.5v64q0 13 9.5 22.5t22.5 9.5h704q13 0 22.5-9.5t9.5-22.5zM1280 896h299l-299-299v299zM1792 1024v672q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-544q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h1088q40 0 68 28t28 68v328q21 13 36 28l408 408q28 28 48 76t20 88z" }));
     }
-    renderModal(showGetPayburner, showNotLoggedIn) {
+    renderModal(showGetPayburner) {
+        const isConnected = this.isPayburnerConnected();
+        const isLoggedIn = this.isPayburnerLoggedIn();
         if (this.purchase.status === 'SETTLED') {
-            return h("div", { id: "myModal", class: this.modalStatus === 'hide' ? 'modal hidden' : 'modal shown' }, h("div", { class: "modal-content" }, h("span", { class: "close", onClick: () => this.closeModal() }, "\u00D7"), h("p", { class: "xrp-price", onClick: () => copyTextToClipboard_1(this.purchase.expectedAmount.toString()) }, this.purchase.expectedAmount, " XRP"), h("p", { class: "payburner-blurb" }, "To pay, send XRP to the following address and tag using any XRP wallet."), h("p", { class: "label" }, "XRP Address"), h("p", { class: "xrp-address", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddress) }, this.purchase.expectedDestinationXrpAddress, " ", this.renderCopyIcon()), h("p", { class: "label" }, "Tag"), h("p", { class: "xrp-address-tag", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddressTag) }, this.purchase.expectedDestinationXrpAddressTag, " ", this.renderCopyIcon()), h("hr", null), h("p", { class: "waiting" }, "Thank you for your payment!  Your payment id is ", this.purchase.purchaseId), h("hr", null), showGetPayburner ? (h("p", { class: "payburner-blurb" }, "If you don't have an XRP wallet or want a great payment experience, click here to install the ", h("a", { href: "https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en" }, "Payburner Wallet"), ".")) : null, showNotLoggedIn ? (h("p", { class: "payburner-blurb" }, "Your Paybuner Wallet is not logged in.")) : null));
+            return h("div", { id: "myModal", class: this.modalStatus === 'hide' ? 'modal hidden' : 'modal shown' }, h("div", { class: "modal-content" }, h("span", { class: "close", onClick: () => this.closeModal() }, "\u00D7"), h("p", { class: "xrp-price", onClick: () => copyTextToClipboard_1(this.purchase.expectedAmount.toString()) }, this.purchase.expectedAmount, " XRP"), h("p", { class: "payburner-blurb" }, "To pay, send XRP to the following address and tag using any XRP wallet."), h("p", { class: "label" }, "XRP Address"), h("p", { class: "xrp-address", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddress) }, this.purchase.expectedDestinationXrpAddress, " ", this.renderCopyIcon()), h("p", { class: "label" }, "Tag"), h("p", { class: "xrp-address-tag", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddressTag) }, this.purchase.expectedDestinationXrpAddressTag, " ", this.renderCopyIcon()), h("hr", null), h("p", { class: "waiting" }, "Thank you for your payment!  Your payment id is ", this.purchase.purchaseId), h("hr", null), showGetPayburner ? (h("p", { class: "payburner-blurb" }, "If you don't have an XRP wallet or want a great payment experience, click here to install the ", h("a", { href: "https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en" }, "Payburner Wallet"), ".")) : null, isConnected && !isLoggedIn ? (h("p", { class: "payburner-blurb" }, "Your Paybuner Wallet is not logged in.")) : null));
         }
         else {
-            return h("div", { id: "myModal", class: this.modalStatus === 'hide' ? 'modal hidden' : 'modal shown' }, h("div", { class: "modal-content" }, h("span", { class: "close", onClick: () => this.closeModal() }, "\u00D7"), h("p", { class: "xrp-price", onClick: () => copyTextToClipboard_1(this.purchase.expectedAmount.toString()) }, this.purchase.expectedAmount, " XRP"), h("p", { class: "payburner-blurb" }, "To pay, send XRP to the following address and tag using any XRP wallet."), h("p", { class: "label" }, "XRP Address"), h("p", { class: "xrp-address", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddress) }, this.purchase.expectedDestinationXrpAddress, " ", this.renderCopyIcon()), h("p", { class: "label" }, "Tag"), h("p", { class: "xrp-address-tag", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddressTag) }, this.purchase.expectedDestinationXrpAddressTag, " ", this.renderCopyIcon()), h("hr", null), h("p", { class: "waiting" }, "Waiting for you to send XRP to the address and tag."), h("div", { class: "lds-ellipsis" }, h("div", null), h("div", null), h("div", null), h("div", null)), h("hr", null), showGetPayburner ? (h("p", { class: "payburner-blurb" }, "If you don't have an XRP wallet or want a great payment experience, click here to install the ", h("a", { href: "https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en" }, "Payburner Wallet"), ".")) : null, showNotLoggedIn ? (h("p", { class: "payburner-blurb" }, "Your Paybuner Wallet is not logged in.")) : null));
+            return h("div", { id: "myModal", class: this.modalStatus === 'hide' ? 'modal hidden' : 'modal shown' }, h("div", { class: "modal-content" }, h("span", { class: "close", onClick: () => this.closeModal() }, "\u00D7"), h("p", { class: "xrp-price", onClick: () => copyTextToClipboard_1(this.purchase.expectedAmount.toString()) }, this.purchase.expectedAmount, " XRP"), h("p", { class: "payburner-blurb" }, "To pay, send XRP to the following address and tag using any XRP wallet."), h("p", { class: "label" }, "XRP Address"), h("p", { class: "xrp-address", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddress) }, this.purchase.expectedDestinationXrpAddress, " ", this.renderCopyIcon()), h("p", { class: "label" }, "Tag"), h("p", { class: "xrp-address-tag", onClick: () => copyTextToClipboard_1(this.purchase.expectedDestinationXrpAddressTag) }, this.purchase.expectedDestinationXrpAddressTag, " ", this.renderCopyIcon()), h("hr", null), h("p", { class: "waiting" }, "Waiting for you to send XRP to the address and tag."), h("div", { class: "lds-ellipsis" }, h("div", null), h("div", null), h("div", null), h("div", null)), h("hr", null), isConnected && isLoggedIn ? (h("div", null, h("div", { style: { float: 'left', marginRight: '12px', marginBottom: '12px' } }, h("img", { height: "50", width: "50", src: "https://payburner.com/images/favicon.png" })), h("div", { style: { marginLeft: '8px' }, class: "payburner-blurb" }, "Please open your Payburner Wallet to approve if you do not have 1-click enabled."))) : null, !isConnected ? (h("div", null, h("div", { style: { float: 'left', marginRight: '12px', marginBottom: '12px' } }, h("img", { height: "50", width: "50", src: "https://payburner.com/images/favicon.png" })), h("div", { style: { marginLeft: '8px' }, class: "payburner-blurb" }, "If you don't have an XRP wallet or want a great payment experience, click here to install the ", h("a", { href: "https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en" }, "Payburner Wallet"), "."))) : null, isConnected && !isLoggedIn ? (h("div", null, h("div", { style: { float: 'left', marginRight: '12px', marginBottom: '12px' } }, h("img", { height: "50", width: "50", src: "https://payburner.com/images/favicon.png" })), h("div", { style: { marginLeft: '8px' }, class: "payburner-blurb" }, "You have Payburner, but you are not logged.  Please do so to approve the payment."))) : null));
         }
     }
     render() {
-        const PAYBURNER = window.PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("div", null, h("button", { onClick: () => this.openModal(), class: "pure-material-button-contained" }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(false, false)));
-        }
-        else if (!this.isPayburnerConnected()) {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("div", null, h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(true, false)));
-        }
-        else if (!this.isPayburnerLoggedIn()) {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("div", null, h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(false, true)));
-        }
-        else if (this.buttonStatus === 'PENDING') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { class: "pure-material-button-contained" }, this.buttonStatus));
-        }
-        else if (this.buttonStatus === 'ERROR') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "ERROR"));
-        }
-        else if (this.buttonStatus === 'WAITING') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "WAITING"));
-        }
-        else if (this.buttonStatus === 'TIMEOUT') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "TIMEOUT"));
-        }
-        else if (this.buttonStatus === 'SETTLING') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus));
-        }
-        else if (this.buttonStatus === 'SETTLED') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus));
-        }
-        else if (this.buttonStatus === 'LOADED') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" }, this.calcedPrice, " XRP"));
-        }
-        else {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" }, "UNKNOWN: ", this.buttonStatus));
-        }
+        return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus }, h("div", null, h("button", { onClick: () => this.openModal(), class: "pure-material-button-contained" }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)), this.renderModal(false)));
     }
     get el() { return getElement(this); }
 };

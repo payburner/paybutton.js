@@ -151,7 +151,6 @@
 }
 
 .modal-content .waiting {
-
   color: rgb(149, 144, 148);
   margin-bottom: 8px;
   font-size: 20px;
@@ -160,7 +159,8 @@
 }
 
 .modal-content .payburner-blurb {
-  font-size: 12px;
+  font-size: 16px;
+  color: rgb(149, 144, 148);
   width: 100%;
   text-align: left;
 }

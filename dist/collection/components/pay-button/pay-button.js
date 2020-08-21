@@ -16,6 +16,9 @@ class PayburnerStatus {
 class CustomEvent {
 }
 export class PayButton {
+    constructor() {
+        this.PAYBURNER = window.PAYBURNER;
+    }
     handleClick() {
         const d = {
             price: this.calcedPrice
@@ -33,7 +36,6 @@ export class PayButton {
             this.buttonid + '/purchase', d)
             .then(response => response.data.data)
             .then((data) => {
-            console.log('##########' + JSON.stringify(data, null, 2));
             this.purchase = new Purchase(data.purchaseId, data.status, data.expectedDestinationXrpAddress, data.expectedDestinationXrpAddressTag, data.expectedAmount, data.statusUrl);
             this.makePayment();
         });
@@ -124,10 +126,9 @@ export class PayButton {
         return JSON.stringify(error);
     }
     makePayment() {
-        const PAYBURNER = window.PAYBURNER;
         const comp = this;
         this.buttonStatus = 'WAITING';
-        PAYBURNER.makePaymentWithTag(this.purchase.expectedDestinationXrpAddress, parseInt(this.purchase.expectedDestinationXrpAddressTag), this.purchase.expectedAmount)
+        this.PAYBURNER.makePaymentWithTag(this.purchase.expectedDestinationXrpAddress, parseInt(this.purchase.expectedDestinationXrpAddressTag), this.purchase.expectedAmount)
             .then(function (response) {
             if (typeof response.error !== 'undefined') {
                 //alert(JSON.stringify(response, null, 2));
@@ -147,6 +148,7 @@ export class PayButton {
                         if (purchaseStatus.data.data.status === 'SETTLED') {
                             count.status = 'SETTLED';
                             clearInterval(interval);
+                            comp.modalStatus = 'hide';
                             console.log('SETTLED', response.finalized.hash, response.finalized.engine_result);
                             comp.buttonStatus = 'SETTLED';
                             comp.settled.emit(comp.purchase);
@@ -167,22 +169,20 @@ export class PayButton {
             }
         })
             .catch(function (error) {
-            PAYBURNER.log("<- error: " + comp.extractError(error));
+            this.PAYBURNER.log("<- error: " + comp.extractError(error));
         });
     }
     isPayburnerConnected() {
-        const PAYBURNER = window.PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
+        if (typeof this.PAYBURNER === 'undefined') {
             return false;
         }
-        return PAYBURNER.isPayburnerConnected();
+        return this.PAYBURNER.isPayburnerConnected();
     }
     isPayburnerLoggedIn() {
-        const PAYBURNER = window.PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
+        if (typeof this.PAYBURNER === 'undefined') {
             return false;
         }
-        return PAYBURNER.isPayburnerLoggedIn();
+        return this.PAYBURNER.isPayburnerLoggedIn();
     }
     awaitPayment() {
         const comp = this;
@@ -224,7 +224,12 @@ export class PayButton {
             this.purchase = new Purchase(data.purchaseId, data.status, data.expectedDestinationXrpAddress, data.expectedDestinationXrpAddressTag, data.expectedAmount, data.statusUrl);
             this.buttonStatus = data.status;
             this.modalStatus = 'show';
-            this.awaitPayment();
+            if (this.isPayburnerLoggedIn()) {
+                this.makePayment();
+            }
+            else {
+                this.awaitPayment();
+            }
         });
     }
     closeModal() {
@@ -235,7 +240,9 @@ export class PayButton {
         return h("svg", { fill: "currentColor", style: { 'display': 'inline-block', 'vertical-align': 'middle' }, height: "12", width: "12", viewBox: "0 0 1792 1792" },
             h("path", { d: "M768 1664h896v-640h-416q-40 0-68-28t-28-68v-416h-384v1152zM1024 224v-64q0-13-9.5-22.5t-22.5-9.5h-704q-13 0-22.5 9.5t-9.5 22.5v64q0 13 9.5 22.5t22.5 9.5h704q13 0 22.5-9.5t9.5-22.5zM1280 896h299l-299-299v299zM1792 1024v672q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-544q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h1088q40 0 68 28t28 68v328q21 13 36 28l408 408q28 28 48 76t20 88z" }));
     }
-    renderModal(showGetPayburner, showNotLoggedIn) {
+    renderModal(showGetPayburner) {
+        const isConnected = this.isPayburnerConnected();
+        const isLoggedIn = this.isPayburnerLoggedIn();
         if (this.purchase.status === 'SETTLED') {
             return h("div", { id: "myModal", class: this.modalStatus === 'hide' ? 'modal hidden' : 'modal shown' },
                 h("div", { class: "modal-content" },
@@ -263,7 +270,7 @@ export class PayButton {
                         "If you don't have an XRP wallet or want a great payment experience, click here to install the ",
                         h("a", { href: "https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en" }, "Payburner Wallet"),
                         ".")) : null,
-                    showNotLoggedIn ? (h("p", { class: "payburner-blurb" }, "Your Paybuner Wallet is not logged in.")) : null));
+                    isConnected && !isLoggedIn ? (h("p", { class: "payburner-blurb" }, "Your Paybuner Wallet is not logged in.")) : null));
         }
         else {
             return h("div", { id: "myModal", class: this.modalStatus === 'hide' ? 'modal hidden' : 'modal shown' },
@@ -291,69 +298,28 @@ export class PayButton {
                         h("div", null),
                         h("div", null)),
                     h("hr", null),
-                    showGetPayburner ? (h("p", { class: "payburner-blurb" },
-                        "If you don't have an XRP wallet or want a great payment experience, click here to install the ",
-                        h("a", { href: "https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en" }, "Payburner Wallet"),
-                        ".")) : null,
-                    showNotLoggedIn ? (h("p", { class: "payburner-blurb" }, "Your Paybuner Wallet is not logged in.")) : null));
+                    isConnected && isLoggedIn ? (h("div", null,
+                        h("div", { style: { float: 'left', marginRight: '12px', marginBottom: '12px' } },
+                            h("img", { height: "50", width: "50", src: "https://payburner.com/images/favicon.png" })),
+                        h("div", { style: { marginLeft: '8px' }, class: "payburner-blurb" }, "Please open your Payburner Wallet to approve if you do not have 1-click enabled."))) : null,
+                    !isConnected ? (h("div", null,
+                        h("div", { style: { float: 'left', marginRight: '12px', marginBottom: '12px' } },
+                            h("img", { height: "50", width: "50", src: "https://payburner.com/images/favicon.png" })),
+                        h("div", { style: { marginLeft: '8px' }, class: "payburner-blurb" },
+                            "If you don't have an XRP wallet or want a great payment experience, click here to install the ",
+                            h("a", { href: "https://chrome.google.com/webstore/detail/ghigcfhmoaokccllienfhdhdndkfhmop/publish-accepted?authuser=3&hl=en" }, "Payburner Wallet"),
+                            "."))) : null,
+                    isConnected && !isLoggedIn ? (h("div", null,
+                        h("div", { style: { float: 'left', marginRight: '12px', marginBottom: '12px' } },
+                            h("img", { height: "50", width: "50", src: "https://payburner.com/images/favicon.png" })),
+                        h("div", { style: { marginLeft: '8px' }, class: "payburner-blurb" }, "You have Payburner, but you are not logged.  Please do so to approve the payment."))) : null));
         }
     }
     render() {
-        const PAYBURNER = window.PAYBURNER;
-        if (typeof PAYBURNER === 'undefined') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("div", null,
-                    h("button", { onClick: () => this.openModal(), class: "pure-material-button-contained" }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)),
-                    this.renderModal(false, false)));
-        }
-        else if (!this.isPayburnerConnected()) {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("div", null,
-                    h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)),
-                    this.renderModal(true, false)));
-        }
-        else if (!this.isPayburnerLoggedIn()) {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("div", null,
-                    h("button", { class: "pure-material-button-contained", onClick: () => this.openModal() }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)),
-                    this.renderModal(false, true)));
-        }
-        else if (this.buttonStatus === 'PENDING') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { class: "pure-material-button-contained" }, this.buttonStatus));
-        }
-        else if (this.buttonStatus === 'ERROR') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "ERROR"));
-        }
-        else if (this.buttonStatus === 'WAITING') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "WAITING"));
-        }
-        else if (this.buttonStatus === 'TIMEOUT') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, "TIMEOUT"));
-        }
-        else if (this.buttonStatus === 'SETTLING') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus));
-        }
-        else if (this.buttonStatus === 'SETTLED') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { onClick: () => this.handleReset(), class: "pure-material-button-contained" }, this.buttonStatus));
-        }
-        else if (this.buttonStatus === 'LOADED') {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" },
-                    this.calcedPrice,
-                    " XRP"));
-        }
-        else {
-            return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
-                h("button", { onClick: () => this.handleClick(), class: "pure-material-button-contained" },
-                    "UNKNOWN: ",
-                    this.buttonStatus));
-        }
+        return h(Host, { purchaseId: this.purchase.purchaseId, status: this.buttonStatus },
+            h("div", null,
+                h("button", { onClick: () => this.openModal(), class: "pure-material-button-contained" }, this.buttonStatus === 'LOADED' ? (this.calcedPrice + ' XRP') : (this.buttonStatus)),
+                this.renderModal(false)));
     }
     static get is() { return "pay-button"; }
     static get encapsulation() { return "shadow"; }
@@ -376,7 +342,7 @@ export class PayButton {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "The first name"
+                "text": "The unique identifier of the pay button"
             },
             "attribute": "buttonid",
             "reflect": false
@@ -393,7 +359,7 @@ export class PayButton {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": ""
+                "text": "Override an optional priced pay button with a price in XRP"
             },
             "attribute": "price",
             "reflect": false
@@ -410,7 +376,7 @@ export class PayButton {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": ""
+                "text": "This allows you to specify an external reference with the payment.  Useful for correlating payments with orders."
             },
             "attribute": "reference",
             "reflect": false
@@ -427,7 +393,7 @@ export class PayButton {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": ""
+                "text": "Override an optionally priced paybutton with a fiat price."
             },
             "attribute": "fiatprice",
             "reflect": false
@@ -444,7 +410,7 @@ export class PayButton {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": ""
+                "text": "The fiat currency of the fiat price."
             },
             "attribute": "fiatcurrency",
             "reflect": false
@@ -461,7 +427,7 @@ export class PayButton {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": ""
+                "text": "By default true.  Set to false to limit the resets."
             },
             "attribute": "allowresetanytime",
             "reflect": false

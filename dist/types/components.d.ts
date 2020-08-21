@@ -7,14 +7,29 @@
 import { HTMLStencilElement, JSXBase } from "./stencil-public-runtime";
 export namespace Components {
     interface PayButton {
+        /**
+          * By default true.  Set to false to limit the resets.
+         */
         "allowresetanytime": boolean;
         /**
-          * The first name
+          * The unique identifier of the pay button
          */
         "buttonid": string;
+        /**
+          * The fiat currency of the fiat price.
+         */
         "fiatcurrency": string;
+        /**
+          * Override an optionally priced paybutton with a fiat price.
+         */
         "fiatprice": number;
+        /**
+          * Override an optional priced pay button with a price in XRP
+         */
         "price": number;
+        /**
+          * This allows you to specify an external reference with the payment.  Useful for correlating payments with orders.
+         */
         "reference": string;
     }
 }
@@ -31,15 +46,30 @@ declare global {
 }
 declare namespace LocalJSX {
     interface PayButton {
+        /**
+          * By default true.  Set to false to limit the resets.
+         */
         "allowresetanytime"?: boolean;
         /**
-          * The first name
+          * The unique identifier of the pay button
          */
         "buttonid"?: string;
+        /**
+          * The fiat currency of the fiat price.
+         */
         "fiatcurrency"?: string;
+        /**
+          * Override an optionally priced paybutton with a fiat price.
+         */
         "fiatprice"?: number;
         "onSettled"?: (event: CustomEvent<any>) => void;
+        /**
+          * Override an optional priced pay button with a price in XRP
+         */
         "price"?: number;
+        /**
+          * This allows you to specify an external reference with the payment.  Useful for correlating payments with orders.
+         */
         "reference"?: string;
     }
     interface IntrinsicElements {
